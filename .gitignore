@@ -1,0 +1,7 @@
+*.tif
+*.aux.xml
+*.pyc
+__pycache__
+*.swp
+*.swo
+logs/
