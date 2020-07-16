@@ -36,7 +36,7 @@ for hor in {0..23}; do
     horf=$(printf '%02d' "$hor")
     compose_tif ./"$moment"/AHE_SSP3_"$year"_"$mon"_"$horf"HR.tif "ahe.hourly" \
       ./"$moment"/AHE_no_meta_SSP3_"$year"_"$mon".tif ./monthly_temp/"$moment"/"$mon"_tempmask.tif "$popden" \
-      -k_funcargs "$(printf 'w1="%lf" w2="%lf" w3="%lf" w4="%lf" fact="%lf"' "${w1[$hor]}" "${w2[$hor]}" "${w3[$hor]}" "${w4[$hor]}" "${fact[$hor]}")" \
+      -k_funcargs "w1='${w1[$hor]}' w2='${w2[$hor]}' w3='${w3[$hor]}' w4='${w4[$hor]}' metabolism='${fact[$hor]}'" \
       -tr 0.0083333333333333 0.0083333333333333 -te -180. -90. 180. 90. \
       -ot Int32 -k_st Float32
   ) &
@@ -45,9 +45,12 @@ wait
 
 for horf in {00..23}; do
   (
-    compose_tif ./"$moment"_utc/AHE_SSP3_"$year"_"$mon"_"$horf"HR_UTC.tif "ahe.utc" \
-      ./"$moment"/AHE_SSP3_"$year"_"$mon"_{00..23}HR.tif ./timezone/time_"$horf".tif \
-      -tr 0.0083333333333333 0.0083333333333333 -te -180. -90. 180. 90. -ot Int32
+    compose_tif ./"$moment"_utc/AHE_SSP3_"$year"_"$mon"_"$horf"HR_UTC.tif "ahe.hourly_utc" \
+      ./"$moment"/AHE_no_meta_SSP3_"$year"_"$mon".tif ./monthly_temp/"$moment"/"$mon"_tempmask.tif "$popden" \
+      ./timezone/time_"$horf"_float32.tif \
+      -k_funcargs "w1='${w1[*]}' w2='${w2[*]}' w3='${w3[*]}' w4='${w4[*]}' metabolism='${fact[*]}'" \
+      -tr 0.0083333333333333 0.0083333333333333 -te -180. -90. 180. 90. \
+      -ot Int32 -k_st Float32
   ) &
 done
 wait
