@@ -27,7 +27,7 @@ mon=$(printf '%02d' "$SGE_TASK_ID")
 
 mkdir -p "$moment" "$moment"_utc
 
-compose_tif ./"$moment"/AHE_no_meta_SSP3_"$year"_"$mon".tif "ahe.monthly_no_meta" \
+compose_tif ./"$moment"/AHE_no_meta_SSP3_"$year"_"$mon".tif "ahe.mul" \
   output_"$year"_corrected.tif ./monthly_temp/"$moment"/"$mon"_beta_m.tif \
   -tr 0.0083333333333333 0.0083333333333333 -te -180. -90. 180. 90.
 

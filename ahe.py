@@ -5,23 +5,6 @@ from numba import prange
 # pylint: disable=unused-argument,too-many-arguments,invalid-name
 
 
-def monthly_no_meta(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize,
-                    raster_ysize, r, gt, **kwargs):
-    monthly_no_meta_jit(in_ar, out_ar)
-
-
-@jit(nopython=True, nogil=True, cache=True, parallel=True)
-def monthly_no_meta_jit(in_ar, out_ar):
-    """
-    in_ar[0]: Annual AHE usage
-    in_ar[1]: Fraction of AHE used in a month
-    """
-    in_ar = np.stack(in_ar)
-    for i in prange(out_ar.shape[0]):
-        for j in range(out_ar.shape[1]):
-            out_ar[i][j] = in_ar[0, i, j] * in_ar[1, i, j]
-
-
 def hourly(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize,
            r, gt, **kwargs):
     hourly_utc_jit(in_ar + (np.zeros_like(in_ar[0]), ), out_ar,
@@ -97,3 +80,23 @@ def utc_jit(in_ar, out_ar):
                 out_ar[i][j] = in_ar[tz, i, j]
             else:
                 out_ar[i][j] = 0
+
+
+def diff(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize,
+         r, gt, **kwargs):
+    out_ar[:] = diff_jit(in_ar[0], in_ar[1])
+
+
+@jit(nopython=True, nogil=True, cache=True, parallel=True)
+def diff_jit(a, b):
+    return a - b
+
+
+def mul(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize, r,
+        gt, **kwargs):
+    out_ar[:] = mul_jit(in_ar[0], in_ar[1])
+
+
+@jit(nopython=True, nogil=True, cache=True, parallel=True)
+def mul_jit(a, b):
+    return a * b
