@@ -12,26 +12,7 @@ export GDAL_VRT_ENABLE_PYTHON=YES
 export PYTHONPATH=.
 export PYTHONSO=$HOME/miniconda3/lib/libpython3.7m.so
 
-compose_tif() {
-  local target_tif=$1
-  local python_function=$2
-  shift 2
-  local original_files=("$@")
-
-  if [[ -e "$target_tif" ]]; then
-    return
-  fi
-
-  local vrt_file=${target_tif%.*}.vrt
-  gdalbuildvrt "$vrt_file" "${original_files[@]}"
-  sed -i '/<VRTRasterBand/{
-    s/<VRTRasterBand/& subClass="VRTDerivedRasterBand"/
-    a <PixelFunctionLanguage>Python</PixelFunctionLanguage>
-    a <PixelFunctionType>'"$python_function"'</PixelFunctionType>
-  }' "$vrt_file"
-  gdal_translate -ot Float32 -co COMPRESS=LZW -co PREDICTOR=2 "$vrt_file" "$target_tif"
-  rm "$vrt_file"
-}
+. ../compose_tif.sh
 
 moment=$1
 
