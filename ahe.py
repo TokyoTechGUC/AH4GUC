@@ -31,9 +31,11 @@ def hourly(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize,
 @jit(nopython=True, nogil=True, cache=True, parallel=True)
 def hourly_jit(in_ar, out_ar, w1, w2, w3, w4, fact):
     """
-    in_ar[0]: Monthly AHE usage
-    in_ar[1]: Monthly mean temperature
-    in_ar[2]: Population density (person/km^2)
+    in_ar: float
+        - in_ar[0]: Monthly AHE usage
+        - in_ar[1]: Monthly mean temperature
+        - in_ar[2]: Population density (person/km^2)
+    out_ar: int
     w1, w2, w3, w4: Weight factors of 4 different usage patterns
     fact: human metabolism rate (W/person)
     """
