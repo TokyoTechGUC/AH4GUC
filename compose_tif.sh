@@ -50,6 +50,7 @@ compose_tif() {
   local original_files=("${positional_args[@]:2}")
 
   if [[ -e "$target_tif" ]]; then
+    echo "$target_tif" exists, skipping.
     return
   fi
 
