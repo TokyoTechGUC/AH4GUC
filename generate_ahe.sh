@@ -1,17 +1,6 @@
 #!/bin/bash
 
-. /etc/profile.d/modules.sh
-. "$HOME/.bashrc"
-module unload python
-
-conda activate
-
-set -eou pipefail
-
-export GDAL_VRT_ENABLE_PYTHON=YES
-export PYTHONPATH=.
-export PYTHONSO=$HOME/miniconda3/lib/libpython3.7m.so
-
+. ./tsubame_job_python_setup.sh
 . ./compose_tif.sh
 
 w1=( 0.608215 0.434346 0.289504 0.259544 0.294717 0.337675 0.45107 0.804371 1.411348 1.316703 1.355483 1.323806 1.314536 1.29899 1.328093 1.307997 1.30695 1.393122 1.463495 1.433388 1.19949 1.210262 0.992553 0.8647332 )
