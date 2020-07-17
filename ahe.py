@@ -8,9 +8,11 @@ from numba import prange
 def hourly(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize,
            r, gt, **kwargs):
     hourly_utc_jit(in_ar + (np.zeros_like(in_ar[0]), ), out_ar,
-                   [float(kwargs["w1"])], [float(kwargs["w2"])],
-                   [float(kwargs["w3"])], [float(kwargs["w4"])],
-                   [float(kwargs["metabolism"])])
+                   np.array([float(kwargs["w1"])]),
+                   np.array([float(kwargs["w2"])]),
+                   np.array([float(kwargs["w3"])]),
+                   np.array([float(kwargs["w4"])]),
+                   np.array([float(kwargs["metabolism"])]))
 
 
 def hourly_utc(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize,
