@@ -22,7 +22,10 @@ compose_tif() {
         ot=$2
         shift 2
         ;;
-      "-mo") # Metadata
+      "-mo" | "-a_scale" | "-co")
+        # -mo Metadata
+        # -a_scale Set scale factor (metadata, actual pixel value is not modified)
+        # -co Creator option
         gdaltranslate_args+=("$1" "$2")
         shift 2
         ;;

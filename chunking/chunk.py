@@ -8,7 +8,7 @@ def geo_transform(gt, x, y):
     return gt[0] + x * gt[1] + y * gt[2], gt[3] + x * gt[4] + y * gt[5]
 
 def format_lattitude(lat):
-    lat = int(lat)
+    lat = round(lat)
     if lat < 0:
         return str(-lat) + "S"
     if lat > 0:
@@ -16,7 +16,7 @@ def format_lattitude(lat):
     return "0"
 
 def format_longitude(lon):
-    lon = int(lon)
+    lon = round(lon)
     if lon < 0:
         return str(-lon) + "W"
     if lon > 0:
