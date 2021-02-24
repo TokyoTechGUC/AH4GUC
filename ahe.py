@@ -102,3 +102,14 @@ def mul(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize, r,
 @jit(nopython=True, nogil=True, cache=True, parallel=True)
 def mul_jit(a, b):
     return a * b
+
+
+def mean(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize,
+         r, gt, **kwargs):
+    mean_jit(in_ar, out_ar)
+
+
+@jit(nopython=True, nogil=True, cache=True, parallel=True)
+def mean_jit(in_ar, out_ar):
+    in_ar = np.stack(in_ar)
+    out_ar[:] = np.sum(in_ar, axis=0) / in_ar.shape[0]
