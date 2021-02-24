@@ -27,7 +27,7 @@ for hor in {0..23}; do
       ./"$moment"/AHE_no_meta_SSP3_"$year"_"$mon".tif ./monthly_temp/"$moment"/"$mon"_tempmask.tif "$popden" \
       -k_funcargs "w1='${w1[$hor]}' w2='${w2[$hor]}' w3='${w3[$hor]}' w4='${w4[$hor]}' metabolism='${fact[$hor]}'" \
       -tr 0.0083333333333333 0.0083333333333333 -te -180. -90. 180. 90. \
-      -ot Int32 -k_st Float32
+      -ot Int32 -k_st Float32 -a_scale 1e-5
   ) &
 done
 wait
@@ -39,7 +39,7 @@ for horf in {00..23}; do
       ./timezone/time_"$horf"_float32.tif \
       -k_funcargs "w1='${w1[*]}' w2='${w2[*]}' w3='${w3[*]}' w4='${w4[*]}' metabolism='${fact[*]}'" \
       -tr 0.0083333333333333 0.0083333333333333 -te -180. -90. 180. 90. \
-      -ot Int32 -k_st Float32
+      -ot Int32 -k_st Float32 -a_scale 1e-5
   ) &
 done
 wait
