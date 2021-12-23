@@ -15,12 +15,13 @@ for month in {01..12}; do
   output_dir=$base_output_dir/"$month"_24
   output_dir_2_bytes="$output_dir"_2_bytes
   output_dir_3_bytes="$output_dir"_3_bytes
-  rm -rf "$output_dir"
-  mkdir -p "$output_dir"
+  mkdir -p "$output_dir_2_bytes"
+  mkdir -p "$output_dir_3_bytes"
   {
     ./tif_to_geogrid.e "$basedir"/AHE_SSP3_"$year"_"$month"_??HR_UTC.tif "$output_dir_2_bytes" "$output_dir_3_bytes"
     cd "$base_output_dir"
-    tar cfz "$month".tar.gz "$output_dir_2_bytes" "$output_dir_3_bytes"
+    tar cfz "$month".tar.gz "$(basename "$output_dir_2_bytes")" "$(basename "$output_dir_3_bytes")"
+    tar xfz AH4GUC*"$month".tar.gz
   } &
 done
 wait
