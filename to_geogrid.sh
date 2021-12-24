@@ -63,5 +63,5 @@ combine_to_whole_year "_2_bytes"
 combine_to_whole_year "_3_bytes"
 
 cd "$base_output_dir"
-tar cfz AHE_"$year"s.tar.gz AHE_"$year"s_?_bytes/
+tar -cf - AHE_"$year"s_?_bytes/ | pigz > AHE_"$year"s.tar.gz
 cd - > /dev/null
