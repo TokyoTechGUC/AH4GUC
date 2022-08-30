@@ -71,4 +71,3 @@ def main(tif_prefix, tif_suffix, x_off, y_off, n_lon, n_lat, output_prefix):
 
 if __name__ == '__main__':
     main(sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]), int(sys.argv[6]), sys.argv[7])
-    #  main('../correct_ahe/present/AHE_SSP3_2010_', 38160, 6360, 600, 600, 'test')
