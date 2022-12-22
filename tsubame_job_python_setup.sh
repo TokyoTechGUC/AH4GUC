@@ -4,7 +4,7 @@
 . "$HOME/.bashrc"
 module unload python
 
-conda activate
+conda activate ${1:-base}
 
 set -eou pipefail
 
