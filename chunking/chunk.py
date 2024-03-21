@@ -84,7 +84,7 @@ def main(tif_prefix, tif_suffix, x_off, y_off, n_lon, n_lat, output_prefix, year
     lon.axis = "X" ;
     lon[:] = x_geo[0]
 
-    ahe = root_group.createVariable("ahe", "i2", ("month", "hour", "lat", "lon"), zlib=True)
+    ahe = root_group.createVariable("ahe", "i2", ("month", "hour", "lat", "lon"), zlib=True, chunksizes=(1, 12, 300, 300))
     ahe.standard_name = "AH4GUC"
     ahe.long_name = "Anthropogenic Heat for Global Urban Climatology"
     ahe.coordinates = "lat lon"
@@ -100,8 +100,9 @@ def main(tif_prefix, tif_suffix, x_off, y_off, n_lon, n_lat, output_prefix, year
 
     dmin, dmax = -32768, 32767
     vmin, vmax = np.min(ahe_data), np.max(ahe_data)
-    ahe.scale_factor = (vmax - vmin) / (dmax - dmin)
-    ahe.add_offset = vmin - dmin * ahe.scale_factor
+    if vmax > vmin:
+        ahe.scale_factor = (vmax - vmin) / (dmax - dmin)
+        ahe.add_offset = vmin - dmin * ahe.scale_factor
 
     ahe[:] = ahe_data
 
